@@ -8,12 +8,12 @@ type Post = {
   content: string;
 };
 
-type PostProps = {
+type Props = {
   post: Post;
 };
 
-const PostList = ({ post }: PostProps) => {
-  const {title, createdAt, thumbnailUrl, categories, content } = post;
+const PostList: React.FC<Props> = ({ post }) => {
+  const { title, createdAt, thumbnailUrl, categories, content } = post;
 
   const date = new Date(createdAt);
   return (

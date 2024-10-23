@@ -6,7 +6,7 @@ import { posts } from "./data/post";
 function App() {
   return (
     <>
-      <Header></Header>
+      <Header />
       <div className="inner">
         <ul>
           {posts.map((post) => (
