@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import styles from "./PostList.module.css";
 type Post = {
   id: number;
   title: string;
@@ -26,24 +27,24 @@ const PostDetail: React.FC<Props> = ({ posts }) => {
   }
   const { title, thumbnailUrl, createdAt, categories, content } = post;
   return (
-    <div className="PostDetail__container">
-      <div className="postDetail__post">
+    <div className={styles.PostDetail__container}>
+      <div className={styles.postDetail__post}>
         <div className="postDetail__image">
           <img src={thumbnailUrl} alt="" />
         </div>
-        <div className="postDetail__content">
-          <div className="postDetail__info">
-            <div className="postDetail__date">{new Date(createdAt).toLocaleDateString()}</div>
-            <div className="postDetail__categories">
+        <div className={styles.postDetail__content}>
+          <div className={styles.postDetail__info}>
+            <div className={styles.postDetail__date}>{new Date(createdAt).toLocaleDateString()}</div>
+            <div className={styles.postDetail__categories}>
               {categories.map((category, index) => (
-                <span className="postDetail__category" key={index}>
+                <span className={styles.postDetail__category} key={index}>
                   {category}
                 </span>
               ))}
             </div>
           </div>
-          <div className="postDetail__head">{title}</div>
-          <div className="postDetail__body" dangerouslySetInnerHTML={{ __html: content }} />
+          <div className={styles.postDetail__head}>{title}</div>
+          <div className={styles.postDetail__body} dangerouslySetInnerHTML={{ __html: content }} />
         </div>
       </div>
     </div>
