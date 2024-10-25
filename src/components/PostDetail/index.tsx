@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./PostList.module.css";
+
 type Post = {
   id: number;
   title: string;
@@ -10,21 +11,43 @@ type Post = {
   content: string;
 };
 
-type Props = {
-  posts: Post[];
-};
+/**memo
+ * useParamsでulrを受けっとてその値をapiの末に置いた際にundifindが返ってきた。
+ * const { postId } = useParams<{postId: string}>()として受けっとた際にエラーがでる。
+ * ブラケットの中身をidに変更すると値を取得してくれた。まだここの理解ができていない。。
+*/
+const PostDetail: React.FC = () => {
+  const { postId } = useParams<{postId: string}>(); // useParamsでurlよりidを取得
+  // const postId = Number(id) // Number関数で数値に変換
+  const [post, setPost] = useState<Post | null>(null);
+  const [loading, setLoading] = useState(true);
 
-const PostDetail: React.FC<Props> = ({ posts }) => {
-  const { id } = useParams<{ id: string }>(); // useParamsで文字列として受けとる
-  console.log(id, typeof id);
-  // findメソッドでusePramsで取得したidをからpostデータを抜き出す
-  const post = posts.find((p) => p.id === Number(id)); // Number関数で数値に変換
+  //記事詳細ページの取得
+  // postIdが更新かかった際に発火
+  useEffect(() => {
+    const fetcher = async () => {
+      try {
+        const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${postId}`);
+        const data = await res.json();
+        setPost(data.post);
+      } catch {
+        console.error("Failed to fetch post");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // 分割代入で取得した値で型エラーが発生する為
-  // post が undefinedの可能性があるため条件を足す
-  if (!post) {
-    return <div className="">記事が見つかりません。</div>;
+    fetcher();
+  }, [postId]); // 依存配列にidを追加
+
+  if (loading) {
+    return <p>Loading...</p>;
   }
+
+  if (!post) {
+    return <div>記事が見つかりません。</div>;
+  }
+
   const { title, thumbnailUrl, createdAt, categories, content } = post;
   return (
     <div className={styles.PostDetail__container}>
