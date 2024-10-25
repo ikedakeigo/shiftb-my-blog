@@ -17,7 +17,7 @@ type Post = {
  * ブラケットの中身をidに変更すると値を取得してくれた。まだここの理解ができていない。。
 */
 const PostDetail: React.FC = () => {
-  const { postId } = useParams<{postId: string}>(); // useParamsでurlよりidを取得
+  const { id } = useParams<{id: string}>(); // useParamsでurlよりidを取得
   // const postId = Number(id) // Number関数で数値に変換
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +27,7 @@ const PostDetail: React.FC = () => {
   useEffect(() => {
     const fetcher = async () => {
       try {
-        const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${postId}`);
+        const res = await fetch(`https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts/${id}`);
         const data = await res.json();
         setPost(data.post);
       } catch {
@@ -38,7 +38,7 @@ const PostDetail: React.FC = () => {
     };
 
     fetcher();
-  }, [postId]); // 依存配列にidを追加
+  }, [id]); // 依存配列にidを追加
 
   if (loading) {
     return <p>Loading...</p>;
