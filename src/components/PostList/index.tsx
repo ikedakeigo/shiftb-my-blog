@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import styles from "./Post.module.css";
+import { useEffect, useState } from "react";
+import styles from "./PostList.module.css";
+
 type Posts = {
   id: number;
   title: string;
@@ -9,14 +11,23 @@ type Posts = {
   content: string;
 };
 
-type Props = {
-  posts: Posts[];
-};
+const PostList = () => {
 
-const PostList: React.FC<Props> = ({ posts }) => {
+  const [postsList, setPostsList] = useState<Posts[]>([])
+
+  useEffect(() => {
+    const fetcher = async () => {
+      const res = await fetch("https://1hmfpsvto6.execute-api.ap-northeast-1.amazonaws.com/dev/posts");
+      const data = await res.json();
+      setPostsList(data.posts)
+    }
+
+    fetcher()
+  }, [])
+
   return (
     <ul>
-      {posts.map((post) => (
+      {postsList.map((post) => (
         <li className={styles.list} key={post.id}>
           {/* Linkコンポーネントを使用して詳細ページに遷移 */}
           <Link to={`/posts/${post.id}`} className={styles.link}>
