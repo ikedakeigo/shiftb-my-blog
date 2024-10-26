@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import styles from "./PostList.module.css";
+import styles from "./PostDetail.module.css";
 
 type Post = {
   id: number;
@@ -52,7 +52,7 @@ const PostDetail: React.FC = () => {
   return (
     <div className={styles.PostDetail__container}>
       <div className={styles.postDetail__post}>
-        <div className="postDetail__image">
+        <div className={styles.postDetail__image}>
           <img src={thumbnailUrl} alt="" />
         </div>
         <div className={styles.postDetail__content}>

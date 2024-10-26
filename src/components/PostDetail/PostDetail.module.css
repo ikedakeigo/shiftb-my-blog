@@ -10,10 +10,10 @@
 }
 
 .postDetail__image {
-img {
-  height: auto;
+  img {
+    height: auto;
     max-width: 100%;
-}
+  }
 }
 
 .postDetail__content {
@@ -27,7 +27,7 @@ img {
 
 .postDetail__date {
   color: #888;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .postDetail__categories {
@@ -37,17 +37,17 @@ img {
 
 .postDetail__category {
   border: 1px solid #06c;
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   color: #06c;
-  font-size: .8rem;
-  margin-right: .5rem;
-  padding: .2rem .4rem;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.4rem;
 }
 
 .postDetail__head {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .postDetail__body {
