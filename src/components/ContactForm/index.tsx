@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ContactForm.module.css";
 
-const ContactForm = () => {
+const ContactForm: React.FC = () => {
   // useStateを使った状態管理
   // 1つのオブジェクトで管理
   const [formData, setFormData] = useState({
@@ -9,11 +9,17 @@ const ContactForm = () => {
     email: "",
     message: "",
   });
+
   const [errors, setErrors] = useState({
     name: "",
     email: "",
     message: "",
   });
+
+  // 送信処理の状態
+  // const [isSubmitting, setIsSubmitting] = useState(false)
+
+  //送信処理完了の状態
   const [success, setSuccess] = useState(false);
 
   // onChangeイベント
@@ -33,10 +39,15 @@ const ContactForm = () => {
       email: "",
       message: "",
     };
+
     if (!formData.name) {
       newErrors.name = "名前を入力してください";
       valid = false;
+    } else if (formData.name.length >= 30) {
+      newErrors.name = "お名前は30文字以内で入力してください。";
+      valid = false;
     }
+
     if (!formData.email) {
       newErrors.email = "メールアドレスを入力してください";
       valid = false;
@@ -48,12 +59,17 @@ const ContactForm = () => {
         valid = false;
       }
     }
+
     if (!formData.message) {
       newErrors.message = "メッセージを入力してください";
+      valid = false;
+    } else if (formData.message.length >= 500) {
+      newErrors.message = "メッセージは500文字以内で入力してください。";
       valid = false;
     }
 
     setErrors(newErrors);
+
     return valid;
   };
 
@@ -67,6 +83,7 @@ const ContactForm = () => {
       return;
     }
 
+    // setIsSubmitting(true);
     setSuccess(true); // 送信処理（成功状態）
 
     try {
@@ -82,16 +99,22 @@ const ContactForm = () => {
       // レスポンスのステータスチェック
       if (!response.ok) throw new Error("Network response"); // ネットワークエラーの際エラーを投げる
       alert("送信できました");
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
+
+      handleClear();
+
+      // handleClearを使用するので以下は不要
+      // setFormData({
+      //   name: "",
+      //   email: "",
+      //   message: "",
+      // });
+
       setErrors({
         name: "",
         email: "",
         message: "",
       });
+      
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
@@ -103,9 +126,9 @@ const ContactForm = () => {
     setFormData({
       name: "",
       email: "",
-      message: ""
-    })
-  }
+      message: "",
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -115,29 +138,31 @@ const ContactForm = () => {
         <div className={styles.name}>
           <label>名前</label>
           <div className="">
-            <input type="text" value={formData.name} id="name" onChange={handleChange} />
+            <input type="text" value={formData.name} id="name" onChange={handleChange} disabled={success} />
             {errors.name && <span style={{ color: "red" }}>{errors.name}</span>}
           </div>
         </div>
         <div className={styles.email}>
           <label>メールアドレス</label>
           <div>
-            <input type="email" value={formData.email} id="email" onChange={handleChange} />
+            <input type="email" value={formData.email} id="email" onChange={handleChange} disabled={success} />
             {errors.email && <span style={{ color: "red" }}>{errors.email}</span>}
           </div>
         </div>
         <div className={styles.message}>
           <label>メッセージ</label>
           <div>
-            <textarea value={formData.message} id="message" onChange={handleChange} rows={8} />
+            <textarea value={formData.message} id="message" onChange={handleChange} rows={8} disabled={success} />
             {errors.message && <span style={{ color: "red" }}>{errors.message}</span>}
           </div>
         </div>
         <div className={styles.button}>
-          <button
-          type="submit"
-          >送信</button>
-          <button type="reset" onClick={handleClear}>クリア</button>
+          <button type="submit" disabled={success}>
+            送信
+          </button>
+          <button type="reset" onClick={handleClear}>
+            クリア
+          </button>
         </div>
       </form>
     </div>
