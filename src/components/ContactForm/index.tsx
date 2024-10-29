@@ -126,7 +126,15 @@ const ContactForm: React.FC = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
     } finally {
-      setIsSuccess(false);
+      /**
+       * finallyブロックはtry catchブロックを挟んだのちに実行される
+       * 成功した直後にfalseに変更するのは
+       * 送信ユーザーとして違和感が残るので
+       * IsSubmitting(false)を追加
+       * submitting状態をfalseにリセットできるため、
+       * ユーザーが再度フォームを送信できるようになる。
+       */
+      setIsSubmitting(false);
     }
   };
 
