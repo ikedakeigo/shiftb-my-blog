@@ -37,11 +37,14 @@ console.log(getNameAndAge(person));
  * 型定義 chapter7
  */
 
-type Arg = number
+/**
+ * numberやnumber[]やstring[]は
+  型変数を定義せずに、そのまま使う方が一般的
 
-type NumberArray = number[];
-
-type StringArray = string[];
+  type Arg = number
+  type NumberArray = number[];
+  type StringArray = string[];
+ */
 
 type Person2 = {
   name: string;
@@ -54,8 +57,8 @@ type Person2 = {
 
 
 
-const result = (arg: Arg) => arg * 2;
-const arg: Arg = 2;
+const result = (arg: number) => arg * 2;
+const arg: number = 2;
 
 console.log(result(arg));
 
@@ -80,15 +83,15 @@ console.log(largeNumber);
 // 問題3: 配列を引数として受け取り、偶数のみを返す関数を作成して実行してください。
 // 例) 引数: [1, 2, 3, 4, 5, 6], 返り値: [2, 4, 6]
 
-const arrayVal = (array: NumberArray) => array.filter((num) => num % 2 === 0);
-const array: NumberArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const arrayVal = (array: number[]) => array.filter((num) => num % 2 === 0);
+const array: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 console.log(arrayVal(array));
 
 // 問題4: 配列内の重複を除去する関数を作成して実行してください。
 // 例) 引数: [1, 2, 3, 2, 4, 5, 6, 5, 6], 返り値: [1, 2, 3, 4, 5, 6]
 
-const arrayA = (arg2: NumberArray) => arg2.filter((element, index) => arg2.indexOf(element) == index);
-const arg2: NumberArray = [1, 1, 2, 2, 3, 4, 4, 5, 5, 6];
+const arrayA = (arg2: number[]) => arg2.filter((element, index) => arg2.indexOf(element) == index);
+const arg2: number[] = [1, 1, 2, 2, 3, 4, 4, 5, 5, 6];
 console.log(arrayA(arg2));
 
 // 問題5: テンプレートリテラルを使用して、引数で受け取った名前を元に「こんにちは、○○さん」と出力する関数を作成して実行してください。
@@ -104,7 +107,7 @@ hello("太郎");
 
 
 
-const mathUp = (array: NumberArray) => {
+const mathUp = (array: number[]) => {
   // 新しい配列を作成
   // map関数で配列を取得
   const newArray = array.map((math) => math * 2);
@@ -116,7 +119,7 @@ console.log(mathUp([1, 2, 3]));
 // 問題7: 文字列の配列を受け取り、index番号を付けたオブジェクトを返す関数を作成して実行してください。
 // 例) 引数: ['a', 'b', 'c'], 返り値: [{ index: 0, value: 'a' }, { index: 1, value: 'b' }, { index: 2, value: 'c' }]
 
-const arrayToObject = (array: StringArray) => array.map((value, index) => ({ index, value }));
+const arrayToObject = (array: string[]) => array.map((value, index) => ({ index, value }));
 console.log(arrayToObject(["a", "b", "c"]));
 
 // 問題8: 名前と年齢オブジェクトの配列を受け取り、ageが第二引数で受け取った数字と一致するオブジェクトを返す関数を作成して実行してください。
@@ -138,7 +141,7 @@ console.log(nameToAge(person2, targetAge));
 // 問題9: 数字の配列を引数として受け取り、偶数のみをフィルタリングし、その後各要素を2倍にした新しい配列を返す関数を作成して実行してください。
 // 例) 引数: [1, 2, 3, 4, 5, 6], 返り値: [4, 8, 12]
 
-const mathToDouble = (array: NumberArray) =>
+const mathToDouble = (array: number[]) =>
   array
     .filter((value) => value % 2 === 0) // 偶数のみ取得
     .map((value) => value * 2); // 取得した値を2倍にして新しい配列として返す
@@ -147,7 +150,7 @@ console.log(mathToDouble([1, 2, 3, 4, 5, 6]));
 // 問題10: 数字の配列を引数として受け取り、各要素に10を足し、その後偶数のみをフィルタリングし、最後に要素を昇順にソートした新しい配列を返す関数を作成して実行してください。
 // 例) 引数: [1, 2, 3, 4, 5, 6], 返り値: [12, 14, 16]
 
-const mathToSort = (array: NumberArray) => array
+const mathToSort = (array: number[]) => array
     .map((value) => value + 10) // map関数で引数で受けた要素を取得し+10して返す
     .filter((value) => value % 2 === 0) // 取得した+10にした値（value）が偶数かどうかの絞りこみ
     .sort((num1, num2) => num1 - num2); // sortメソッドを使用して
